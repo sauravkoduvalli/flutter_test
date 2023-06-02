@@ -14,7 +14,7 @@ class OnBoardingScreen extends StatelessWidget {
             print(value.toString());
           }
         },
-        children:  [
+        children:  const [
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
