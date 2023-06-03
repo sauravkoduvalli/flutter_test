@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart';
 
-import '../../bloc/bloc.dart';
 import '../../bloc/home/home_bloc.dart';
 import '../../service/dummy_data.dart';
 
