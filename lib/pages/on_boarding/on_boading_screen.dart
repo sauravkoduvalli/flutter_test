@@ -9,15 +9,15 @@ class OnBoardingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    PageController _pageController = PageController(initialPage: 0);
+    PageController pageController = PageController(initialPage: 0);
     return Scaffold(
       body: BlocBuilder<OnBoardingBloc, OnBoardingState>(
         builder: (context, state) {
           return PageView(
-            controller: _pageController,
+            controller: pageController,
             onPageChanged: (value) {
               context.read<OnBoardingBloc>().add(OnBoardingEvent(value));
-              _pageController.animateToPage(
+              pageController.animateToPage(
                 value,
                 duration: const Duration(seconds: 1),
                 curve: Curves.decelerate,
@@ -51,7 +51,7 @@ class OnBoardingScreen extends StatelessWidget {
                   (route) => false,
                 );
               },
-              child: Text("Go To Home"),
+              child: const Text("Go To Home"),
             ),
           )
         ],
