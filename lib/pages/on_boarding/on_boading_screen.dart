@@ -1,8 +1,6 @@
-import 'package:first_project/pages/home/home_screen.dart';
+import 'package:first_project/pages/login/login_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../bloc/on_boarding/on_boarding_bloc.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   const OnBoardingScreen({super.key});
@@ -11,12 +9,9 @@ class OnBoardingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     PageController pageController = PageController(initialPage: 0);
     return Scaffold(
-      body: BlocBuilder<OnBoardingBloc, OnBoardingState>(
-        builder: (context, state) {
-          return PageView(
+      body: PageView(
             controller: pageController,
             onPageChanged: (value) {
-              context.read<OnBoardingBloc>().add(OnBoardingEvent(value));
               pageController.animateToPage(
                 value,
                 duration: const Duration(seconds: 1),
@@ -24,30 +19,27 @@ class OnBoardingScreen extends StatelessWidget {
               );
             },
             children: [
-              _pageWidget(state, Colors.deepOrange, context),
-              _pageWidget(state, Colors.amber, context),
-              _pageWidget(state, Colors.deepPurple, context),
+              _pageWidget(Colors.deepOrange, context),
+              _pageWidget(Colors.amber, context),
+              _pageWidget(Colors.deepPurple, context),
             ],
-          );
-        },
-      ),
+          ),
+      
     );
   }
 
-  Widget _pageWidget(OnBoardingState state, Color color, BuildContext context) {
+  Widget _pageWidget(Color color, BuildContext context) {
     return Container(
       color: color,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(state.page.toString()),
           Visibility(
-            visible: state.page == 2,
             child: ElevatedButton(
               onPressed: () {
                 Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => const HomeScreen()),
+                  MaterialPageRoute(builder: (context) => const LoginScreen()),
                   (route) => false,
                 );
               },
