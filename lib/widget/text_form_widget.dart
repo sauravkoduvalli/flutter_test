@@ -12,6 +12,8 @@ class TextFormWidget extends StatelessWidget {
     required this.isPswd,
     required this.type,
     this.viewPassword,
+    required this.keyboardAction,
+    required this.onChanged,
   });
 
   final TextEditingController controller;
@@ -20,14 +22,18 @@ class TextFormWidget extends StatelessWidget {
   final bool isPswd;
   final VoidCallback? viewPassword;
   final FormFieldType type;
+  final TextInputAction keyboardAction;
+  final Function(String) onChanged;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
+        onChanged:onChanged,
         obscureText: isPswd,
         controller: controller,
+        textInputAction: keyboardAction,
         keyboardType: AppConstant().keyboardType(type),
         decoration: InputDecoration(
           label: Text(lable),

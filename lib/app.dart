@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'pages/app_bloc_provider.dart';
 import 'pages/on_boarding/on_boading_screen.dart';
@@ -13,12 +14,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: AppBlocProviders.appBlocProviders,
-      child: MaterialApp(
-        title: 'Flutter Demo',
-        debugShowCheckedModeBanner: false,
-        theme: AppTheme().appTheme(),
-        routes: {
-          '/': (context) => const OnBoardingScreen(),
+      child: ScreenUtilInit(
+        builder: (context, child) {
+          return MaterialApp(
+            title: 'Flutter Demo',
+            debugShowCheckedModeBanner: false,
+            theme: AppTheme().appTheme(),
+            routes: {
+              '/': (context) => const OnBoardingScreen(),
+            },
+          );
         },
       ),
     );
