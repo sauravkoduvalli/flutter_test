@@ -1,7 +1,7 @@
-import 'package:first_project/pages/login/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../auth/login/login_screen.dart';
 import 'bloc/on_boarding_bloc.dart';
 
 class OnBoardingScreen extends StatelessWidget {

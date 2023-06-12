@@ -21,6 +21,7 @@ dependencies:
   flutter_screenutil: ^5.8.4
   firebase_auth: ^4.6.2
   firebase_core: ^2.13.1
+  fluttertoast: ^8.2.2
 
 dev_dependencies:
   flutter_test:

@@ -1,10 +1,13 @@
 import 'package:first_project/utils/constant/app_enum.dart';
+import 'package:first_project/widget/auth_button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../widget/text_form_widget.dart';
+import '../../../widget/text_form_widget.dart';
+import '../register/register_screen.dart';
 import 'bloc/login_bloc.dart';
+import 'controller/login_controller.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -27,12 +30,12 @@ class _LoginScreenState extends State<LoginScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // /// image
-            // SizedBox(
-            //   width: 150.w,
-            //   height: 150.w,
-            //   child: Image.asset("assets/images/login.png"),
-            // ),
+            /// image
+            SizedBox(
+              width: 150.w,
+              height: 150.w,
+              child: Image.asset("assets/images/login.png"),
+            ),
             BlocBuilder<LoginBloc, LoginState>(
               builder: (context, state) {
                 return TextFormWidget(
@@ -82,22 +85,26 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
             SizedBox(height: 12.h),
-            Row(
-              children: [
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      
-                    },
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blueAccent,
-                        foregroundColor: Colors.white,
-                        fixedSize: Size(double.infinity, 40.h)),
-                    child: const Text("LOGIN"),
-                  ),
-                ),
-              ],
+            AuthButtonWidget(
+              label: "LOGIN",
+              backgroundColor: Colors.blueAccent,
+              foregroundColor: Colors.white,
+              onTap: () {
+                LoginController(context: context).handleLogin('email');
+              },
             ),
+            SizedBox(height: 12.h),
+            AuthButtonWidget(
+              label: "REGISTER",
+              backgroundColor: Colors.white,
+              foregroundColor: Colors.blueAccent,
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return RegisterScreen();
+                }));
+              },
+            ),
+            
           ],
         ),
       ),
