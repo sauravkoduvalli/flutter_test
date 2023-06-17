@@ -20,7 +20,7 @@ class OnBoardingScreen extends StatelessWidget {
               context.read<OnBoardingBloc>().add(OnBoardingEvent(value));
               pageController.animateToPage(
                 value,
-                duration: const Duration(seconds: 1),
+                duration: const Duration(milliseconds: 200),
                 curve: Curves.decelerate,
               );
             },

@@ -1,3 +1,6 @@
+import 'package:first_project/pages/auth/register/controller/register_controller.dart';
+import 'package:first_project/utils/constant/app_validators.dart';
+import 'package:first_project/widget/toast_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,7 +8,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../utils/constant/app_enum.dart';
 import '../../../widget/auth_button_widget.dart';
 import '../../../widget/text_form_widget.dart';
-import '../login/controller/login_controller.dart';
 import 'bloc/register_bloc.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -15,7 +17,9 @@ class RegisterScreen extends StatefulWidget {
   State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _RegisterScreenState extends State<RegisterScreen>
+    with AppValidatorsMixin {
+  final _formKey = GlobalKey<FormState>();
   final _fullNameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -25,104 +29,114 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextFormWidget(
-              onChanged: (val) {
-                context.read<RegisterBloc>().add(FullNameEvent(val));
-              },
-              controller: _fullNameController,
-              lable: "Full Name",
-              prefixIcon: Icons.person_2_outlined,
-              type: FormFieldType.fullname,
-              isPswd: false,
-              keyboardAction: TextInputAction.next,
-            ),
-            TextFormWidget(
-              onChanged: (val) {
-                context.read<RegisterBloc>().add(EmailEvent(val));
-              },
-              controller: _emailController,
-              lable: "Email",
-              prefixIcon: Icons.mail_outline,
-              type: FormFieldType.email,
-              isPswd: false,
-              keyboardAction: TextInputAction.next,
-            ),
-            TextFormWidget(
-              onChanged: (val) {
-                context.read<RegisterBloc>().add(PasswordEvent(val));
-              },
-              controller: _passwordController,
-              lable: "Password",
-              prefixIcon: Icons.lock_outline,
-              type: FormFieldType.password,
-              isPswd: true,
-              keyboardAction: TextInputAction.next,
-            ),
-            TextFormWidget(
-              onChanged: (val) {
-                context.read<RegisterBloc>().add(ConfirmPasswordEvent(val));
-                if (_passwordController.text != val) {
-                  context.read<RegisterBloc>().add(IsPasswordSameEvent());
-                } else {
-                  return;
-                }
-              },
-              controller: _confirmPasswordController,
-              lable: "Confirm Password",
-              prefixIcon: Icons.lock_outline,
-              type: FormFieldType.password,
-              isPswd: true,
-              keyboardAction: TextInputAction.done,
-            ),
-            SizedBox(height: 12.h),
-            AuthButtonWidget(
-              label: "REGISTER",
-              backgroundColor: Colors.blueAccent,
-              foregroundColor: Colors.white,
-              onTap: () {
-                LoginController(context: context).handleLogin('email');
-              },
-            ),
-            SizedBox(height: 12.h),
-            AuthButtonWidget(
-              label: "Back To Login",
-              backgroundColor: Colors.white,
-              foregroundColor: Colors.blueAccent,
-              onTap: () {
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _loginButton(
-    BuildContext context,
-    String label,
-    Color backgroundColor,
-    Color foregroundColor,
-    Function()? onTap,
-  ) {
-    return Row(
-      children: [
-        Expanded(
-          child: ElevatedButton(
-            onPressed: onTap,
-            style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0)),
-                backgroundColor: backgroundColor,
-                foregroundColor: foregroundColor,
-                fixedSize: Size(double.infinity, 40.h)),
-            child: Text(label),
+        child: Form(
+          key: _formKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              TextFormWidget(
+                onChanged: (val) {
+                  context.read<RegisterBloc>().add(FullNameEvent(val));
+                },
+                controller: _fullNameController,
+                lable: "Username",
+                prefixIcon: Icons.person_2_outlined,
+                type: FormFieldType.fullname,
+                isPswd: false,
+                keyboardAction: TextInputAction.next,
+                validator: (val) {
+                  if (isNotNull(val)) {
+                    return "username required";
+                  } 
+                  // else if (!isValidName(val!)) {
+                  //   return "Enter valid username";
+                  // } 
+                  else {
+                    return null;
+                  }
+                },
+              ),
+              TextFormWidget(
+                onChanged: (val) {
+                  context.read<RegisterBloc>().add(EmailEvent(val));
+                },
+                controller: _emailController,
+                lable: "Email",
+                prefixIcon: Icons.mail_outline,
+                type: FormFieldType.email,
+                isPswd: false,
+                keyboardAction: TextInputAction.next,
+              ),
+              BlocBuilder<RegisterBloc, RegisterState>(
+                builder: (context, state) {
+                  return TextFormWidget(
+                    onChanged: (val) {
+                      context.read<RegisterBloc>().add(PasswordEvent(val));
+                    },
+                    controller: _passwordController,
+                    lable: "Password",
+                    prefixIcon: Icons.lock_outline,
+                    type: FormFieldType.password,
+                    isPswd: context.read<RegisterBloc>().state.showPassword,
+                    keyboardAction: TextInputAction.next,
+                    viewPassword: () {
+                      context.read<RegisterBloc>().add(ShowPasswordEvent());
+                    },
+                  );
+                },
+              ),
+              BlocBuilder<RegisterBloc, RegisterState>(
+                builder: (context, state) {
+                  return TextFormWidget(
+                    onChanged: (val) {
+                      if (_passwordController.text != val) {
+                        toastWidget(
+                            message:
+                                "Confirm password is not matching with password");
+                      } else {
+                        return;
+                      }
+                    },
+                    controller: _confirmPasswordController,
+                    lable: "Confirm Password",
+                    prefixIcon: Icons.lock_outline,
+                    type: FormFieldType.password,
+                    isPswd:
+                        context.read<RegisterBloc>().state.showConfirmPassword,
+                    keyboardAction: TextInputAction.done,
+                    viewPassword: () => context
+                        .read<RegisterBloc>()
+                        .add(ShowConfirmPasswordEvent()),
+                  );
+                },
+              ),
+              SizedBox(height: 12.h),
+              AuthButtonWidget(
+                label: "REGISTER",
+                backgroundColor: Colors.blueAccent,
+                foregroundColor: Colors.white,
+                onTap: () {
+                  if (_formKey.currentState!.validate()) {
+                    RegisterController(context: context)
+                        .handleRegister('email');
+                  }
+                },
+              ),
+              SizedBox(height: 12.h),
+              AuthButtonWidget(
+                label: "Back To Login",
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.blueAccent,
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
           ),
         ),
-      ],
+      ),
     );
   }
 }

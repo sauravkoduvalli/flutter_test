@@ -14,6 +14,7 @@ class TextFormWidget extends StatelessWidget {
     this.viewPassword,
     required this.keyboardAction,
     required this.onChanged,
+    this.validator,
   });
 
   final TextEditingController controller;
@@ -24,17 +25,19 @@ class TextFormWidget extends StatelessWidget {
   final FormFieldType type;
   final TextInputAction keyboardAction;
   final Function(String) onChanged;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: TextFormField(
-        onChanged:onChanged,
+        onChanged: onChanged,
         obscureText: isPswd,
         controller: controller,
         textInputAction: keyboardAction,
         keyboardType: AppConstant().keyboardType(type),
+        validator: validator,
         decoration: InputDecoration(
           label: Text(lable),
           prefixIcon: Icon(prefixIcon),
@@ -54,6 +57,4 @@ class TextFormWidget extends StatelessWidget {
       ),
     );
   }
-
-
 }

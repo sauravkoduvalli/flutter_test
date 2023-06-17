@@ -21,4 +21,6 @@ class AppConstant {
         TextInputType.text;
     }
   }
+
+  
 }

@@ -25,6 +25,10 @@ class ConfirmPasswordEvent extends RegisterEvent {
 
   final String confirmPassword;
 }
-class IsPasswordSameEvent extends RegisterEvent {
-  IsPasswordSameEvent();
+
+class ShowPasswordEvent extends RegisterEvent {
+  ShowPasswordEvent();
+}
+class ShowConfirmPasswordEvent extends RegisterEvent {
+  ShowConfirmPasswordEvent();
 }

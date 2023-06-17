@@ -21,9 +21,14 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       emit(state.copyWith(confirmPassword: event.confirmPassword));
       print("confirm pass is --- ${state.confirmPassword}");
     });
-    on<IsPasswordSameEvent>((event, emit) {
-      emit(state.copyWith(isPasswordSame: state.isPasswordSame));
-      print("confirm pass is --- ${state.confirmPassword}");
+    on<ShowPasswordEvent>((event, emit) {
+      emit(state.copyWith(showPassword: !state.showPassword));
+      print("show pass is --- ${!state.showPassword}");
     });
+    on<ShowConfirmPasswordEvent>((event, emit) {
+      emit(state.copyWith(showConfirmPassword: !state.showConfirmPassword));
+      print("show conf pass is --- ${!state.showConfirmPassword}");
+    });
+   
   }
 }

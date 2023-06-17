@@ -6,28 +6,32 @@ class RegisterState {
     this.email = "",
     this.password = "",
     this.confirmPassword = "",
-    this.isPasswordSame = true,
+    this.showPassword = true,
+    this.showConfirmPassword = true,
   });
 
   final String fullname;
   final String email;
   final String password;
   final String confirmPassword;
-  final bool isPasswordSame;
+  final bool showPassword;
+  final bool showConfirmPassword;
 
   RegisterState copyWith({
     String? fullname,
     String? email,
     String? password,
     String? confirmPassword,
-    bool? isPasswordSame,
+    bool? showPassword,
+    bool? showConfirmPassword,
   }) {
     return RegisterState(
       fullname: fullname ?? this.fullname,
       email: email ?? this.email,
       password: password ?? this.password,
       confirmPassword: confirmPassword?? this.confirmPassword,
-      isPasswordSame: isPasswordSame ?? this.isPasswordSame,
+      showPassword: showPassword ??this.showPassword,
+      showConfirmPassword: showConfirmPassword ??this.showConfirmPassword,
     );
   }
 }

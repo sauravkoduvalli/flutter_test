@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:first_project/pages/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -49,6 +50,9 @@ class LoginController {
         if (user != null) {
           /// got verified user from firebase
           toastWidget(message: "Login successful");
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return HomeScreen();
+          }));
           return;
         } else {
           /// didn't get any user from firebase

@@ -30,12 +30,6 @@ class _LoginScreenState extends State<LoginScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            /// image
-            SizedBox(
-              width: 150.w,
-              height: 150.w,
-              child: Image.asset("assets/images/login.png"),
-            ),
             BlocBuilder<LoginBloc, LoginState>(
               builder: (context, state) {
                 return TextFormWidget(
@@ -100,11 +94,10 @@ class _LoginScreenState extends State<LoginScreen> {
               foregroundColor: Colors.blueAccent,
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return RegisterScreen();
+                  return const RegisterScreen();
                 }));
               },
             ),
-            
           ],
         ),
       ),
