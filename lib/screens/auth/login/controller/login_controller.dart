@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:first_project/pages/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../widget/toast_widget.dart';
+import '../../../home/home_screen.dart';
 import '../bloc/login_bloc.dart';
 
 class LoginController {

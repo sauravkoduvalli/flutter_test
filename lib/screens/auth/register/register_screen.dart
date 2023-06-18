@@ -1,4 +1,3 @@
-import 'package:first_project/pages/auth/register/controller/register_controller.dart';
 import 'package:first_project/utils/constant/app_validators.dart';
 import 'package:first_project/widget/toast_widget.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +8,7 @@ import '../../../utils/constant/app_enum.dart';
 import '../../../widget/auth_button_widget.dart';
 import '../../../widget/text_form_widget.dart';
 import 'bloc/register_bloc.dart';
+import 'controller/register_controller.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -36,6 +36,7 @@ class _RegisterScreenState extends State<RegisterScreen>
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              // username
               TextFormWidget(
                 onChanged: (val) {
                   context.read<RegisterBloc>().add(FullNameEvent(val));
@@ -49,15 +50,12 @@ class _RegisterScreenState extends State<RegisterScreen>
                 validator: (val) {
                   if (isNotNull(val)) {
                     return "username required";
-                  } 
-                  // else if (!isValidName(val!)) {
-                  //   return "Enter valid username";
-                  // } 
-                  else {
+                  } else {
                     return null;
                   }
                 },
               ),
+              // email address
               TextFormWidget(
                 onChanged: (val) {
                   context.read<RegisterBloc>().add(EmailEvent(val));
@@ -69,6 +67,7 @@ class _RegisterScreenState extends State<RegisterScreen>
                 isPswd: false,
                 keyboardAction: TextInputAction.next,
               ),
+              // password
               BlocBuilder<RegisterBloc, RegisterState>(
                 builder: (context, state) {
                   return TextFormWidget(
@@ -87,6 +86,7 @@ class _RegisterScreenState extends State<RegisterScreen>
                   );
                 },
               ),
+              // confirm password
               BlocBuilder<RegisterBloc, RegisterState>(
                 builder: (context, state) {
                   return TextFormWidget(
@@ -113,6 +113,7 @@ class _RegisterScreenState extends State<RegisterScreen>
                 },
               ),
               SizedBox(height: 12.h),
+              // register button
               AuthButtonWidget(
                 label: "REGISTER",
                 backgroundColor: Colors.blueAccent,
@@ -125,6 +126,7 @@ class _RegisterScreenState extends State<RegisterScreen>
                 },
               ),
               SizedBox(height: 12.h),
+              // back to login button
               AuthButtonWidget(
                 label: "Back To Login",
                 backgroundColor: Colors.white,

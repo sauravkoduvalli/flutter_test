@@ -1,9 +1,9 @@
+import 'package:first_project/screens/app_bloc_provider.dart';
+import 'package:first_project/screens/on_boarding/on_boading_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'pages/app_bloc_provider.dart';
-import 'pages/on_boarding/on_boading_screen.dart';
 import 'utils/theme/app_theme.dart';
 
 class MyApp extends StatelessWidget {
